@@ -11,21 +11,39 @@ public class TicTakToe {
 	static char board[] = new char[10];
 	static char player;
 	static char computer;
-	Scanner scanner = new Scanner(System.in);
+	static int playerLocation;
 
 	/*
-	 * Created method called Result
+	 * Created method Called Result
 	 */
-	public void result() {
-		for (int i = 1; i < 10; i++) {
-			board[i] = ' ';
+	public static void result() {
+		for (int index = 1; index < 10; index++) {
+			board[index] = ' ';
 		}
+	}
+	/*
+	 * Method to make a choice between Computer and player
+	 */
+
+	public static void getPlayerChoice() {
+		Scanner input = new Scanner(System.in);
+		System.out.print("select X or O : ");
+		player = input.next().toUpperCase().charAt(0);
+		/**
+		 * Used if else conditon to check the result
+		 */
+		if (player == 'X')
+			computer = 'O';
+		else
+			computer = 'X';
+		System.out.println("You have selected : " + player);
+		System.out.println("Computer's choice is : " + computer);
 	}
 
 	/*
-	 * Method to show Game Board.
+	 * Logic for Printing the showBoard the TicTacToe Game Board.
 	 */
-	public void showBoard() {
+	public static void showBoard() {
 		System.out.println(board[1] + " | " + board[2] + " | " + board[3]);
 		System.out.println("---------");
 		System.out.println(board[4] + " | " + board[5] + " | " + board[6]);
@@ -33,12 +51,25 @@ public class TicTakToe {
 		System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
 	}
 
+	public static void userMove() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter Location 1-9 to Make Move");
+		playerLocation = input.nextInt();
+		if (playerLocation < 10 && playerLocation > 0) {
+			board[playerLocation] = player;
+			showBoard();
+		} else {
+			System.out.println("Invalid Choice");
+		}
+	}
+
 	/*
 	 * Logic for checking Player selected letter
 	 */
-	public void checkResult() {
+	public static void check() {
+		Scanner input = new Scanner(System.in);
 		System.out.println("please select your choice letter: 'X' or 'Y' ");
-		char choice = scanner.next().toUpperCase().charAt(0);
+		char choice = input.next().toUpperCase().charAt(0);
 		if (choice == 'X') {
 			System.out.println("Player selected letter is:" + 'X');
 			System.out.println("Computer selected letter is:" + 'O');
@@ -50,19 +81,16 @@ public class TicTakToe {
 	}
 
 	/**
+	 * program execution starts from main method
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		System.out.println("Welcom to the Tic Tac Toe Game program");
-
-		/*
-		 * Creating object of class
-		 */
-		TicTakToe tictactoe = new TicTakToe();
-		tictactoe.result();
-		tictactoe.showBoard();
-		tictactoe.checkResult();
+		result();
+		getPlayerChoice();
+		showBoard();
+		userMove();
 	}
 
 }
