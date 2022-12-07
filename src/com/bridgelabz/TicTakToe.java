@@ -1,5 +1,6 @@
 package com.bridgelabz;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /***
@@ -99,6 +100,22 @@ public class TicTakToe {
 			System.out.println("Free space is available! you have " + numOfFreeSpaces + " moves left");
 		}
 	}
+	/*
+	 * Method to check who plays first
+	 */
+	public static void tossResult() {
+		Random toss = new Random();
+		Scanner input = new Scanner(System.in);
+		int tossResult = toss.nextInt(2) ;
+		System.out.println("Genarated random Number is :" + tossResult);
+		System.out.println("\nChoose 0 for Heads or 1 for Tails");
+		int coinSelect = input.nextInt();
+		if (coinSelect == tossResult) {
+			System.out.println("\nPlayer Won The Toss! Player Starts");
+		} else {
+			System.out.println("\nComputer Won The Toss! Computer Starts");
+		}
+	}
 
 	/**
 	 * program execution starts from main method
@@ -112,6 +129,7 @@ public class TicTakToe {
 		showBoard();
 		userMove();
 		checkFreeSpace();
+		tossResult();
 	}
 
 }
