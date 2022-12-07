@@ -52,16 +52,20 @@ public class TicTakToe {
 		System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
 	}
 
-	public static void userMove() {
+	private static void userTurn() {
+		int playerMove;
 		Scanner input = new Scanner(System.in);
-		System.out.println("Enter Location 1-9 to Make Move");
-		playerLocation = input.nextInt();
-		if (playerLocation < 10 && playerLocation > 0) {
-			board[playerLocation] = player;
-			showBoard();
-		} else {
-			System.out.println("Invalid Choice");
+		while (true) {
+
+			System.out.println("Choose your location(1-9): ");
+			playerMove = input.nextInt();
+			if (board[playerMove] == ' ') {
+				break;
+			}
+
 		}
+		System.out.println("Player choose:: " + playerMove);
+		board[playerMove] = player;
 	}
 
 	/*
@@ -100,13 +104,14 @@ public class TicTakToe {
 			System.out.println("Free space is available! you have " + numOfFreeSpaces + " moves left");
 		}
 	}
+
 	/*
 	 * Method to check who plays first
 	 */
 	public static void tossResult() {
 		Random toss = new Random();
 		Scanner input = new Scanner(System.in);
-		int tossResult = toss.nextInt(2) ;
+		int tossResult = toss.nextInt(2);
 		System.out.println("Genarated random Number is :" + tossResult);
 		System.out.println("\nChoose 0 for Heads or 1 for Tails");
 		int coinSelect = input.nextInt();
@@ -115,6 +120,40 @@ public class TicTakToe {
 		} else {
 			System.out.println("\nComputer Won The Toss! Computer Starts");
 		}
+	}
+
+	/*
+	 * Method to check winning condition
+	 */
+	private static void winningCondition() {
+		if ((board[1] == player && board[2] == player && board[3] == player)
+				|| (board[4] == player && board[5] == player && board[6] == player)
+				|| (board[7] == player && board[8] == player && board[9] == player)
+				|| (board[1] == player && board[5] == player && board[9] == player)
+				|| (board[3] == player && board[5] == player && board[7] == player)
+				|| (board[1] == player && board[4] == player && board[7] == player)
+				|| (board[2] == player && board[5] == player && board[8] == player)
+				|| (board[3] == player && board[6] == player && board[9] == player)) {
+			showBoard();
+			System.out.println("Player win the game");
+			System.exit(0);
+		}
+	}
+
+	/*
+	 * Method to play For computer.
+	 */
+	private static void computerTurn() {
+		int computerMove;
+		while (true) {
+			computerMove = (int) Math.floor(Math.random() * 10) % 9 + 1;
+			if (board[computerMove] == ' ') {
+				break;
+			}
+
+		}
+		System.out.println("Computer choose:: " + computerMove);
+		board[computerMove] = computer;
 	}
 
 	/**
@@ -126,10 +165,14 @@ public class TicTakToe {
 		System.out.println("Welcom to the Tic Tac Toe Game program");
 		result();
 		getPlayerChoice();
-		showBoard();
-		userMove();
-		checkFreeSpace();
 		tossResult();
-	}
+		while (true) {
+			winningCondition();
+			computerTurn();
+			userTurn();
+			checkFreeSpace();
+			showBoard();
+		}
 
+	}
 }
